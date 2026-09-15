@@ -80,11 +80,9 @@ public class TaskController {
         return taskService.vencidas().stream().map(TaskMapper::aResponse).toList();
     }
 
-    /**
-     * GET /tasks/unassigned — tareas sin responsable de todos los proyectos.
-     */
+    /** GET /tasks/unassigned — tareas sin responsable, por dueDate ascendente y sin fecha al final (S6 Día 2). */
     @Operation(summary = "Lista tareas sin responsable",
-            description = "Tareas cuya assigneeId es null, ordenadas por dueDate asc (nulls al final).")
+            description = "Tareas con assigneeId null en cualquier estado, por dueDate ascendente; las sin fecha al final.")
     @GetMapping("/tasks/unassigned")
     public List<TaskResponse> getUnassignedTasks() {
         return taskService.sinResponsable().stream().map(TaskMapper::aResponse).toList();

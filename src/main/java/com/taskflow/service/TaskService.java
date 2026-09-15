@@ -123,8 +123,9 @@ public class TaskService {
     }
 
     /**
-     * Lista tareas sin responsable de todos los proyectos (GET /tasks/unassigned).
-     * Usa el predicado ReportService.SIN_ASIGNAR y ordena con TaskOrders.POR_FECHA.
+     * Tareas sin responsable de todos los proyectos, en cualquier estado (GET /tasks/unassigned, S6
+     * Día 2). La regla es ReportService.SIN_ASIGNAR; el orden, TaskOrders.POR_FECHA: por fecha
+     * ascendente y las que no tienen fecha al final.
      */
     public List<Task> sinResponsable() {
         return repository.findAll().stream()

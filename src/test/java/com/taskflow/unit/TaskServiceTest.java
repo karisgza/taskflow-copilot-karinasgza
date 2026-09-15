@@ -159,7 +159,7 @@ class TaskServiceTest {
         }
     }
 
-    // ==================== S6 Día 2: listado de vencidas ====================
+    // ==================== S6 Día 2: listados de vencidas y sin responsable ====================
 
     private static final LocalDate HOY = LocalDate.now();
 
@@ -195,22 +195,23 @@ class TaskServiceTest {
     class SinResponsable {
 
         @Test
-        void sinResponsable_filtraYOrdenaSegunSpec() {
-            Task conFecha10 = tareaCon(10L, TaskStatus.TODO, null, HOY.plusDays(10));
-            Task conResponsable = tareaCon(11L, TaskStatus.TODO, 1L, HOY.plusDays(5));
-            Task sinFecha = tareaCon(12L, TaskStatus.TODO, null, null);
-            Task conFecha2 = tareaCon(13L, TaskStatus.TODO, null, HOY.plusDays(2));
-            when(repository.findAll()).thenReturn(List.of(conFecha10, conResponsable, sinFecha, conFecha2));
+        void sinResponsable_devuelveLasSinResponsableEnCualquierEstado_porFechaYSinFechaAlFinal() {
+            // Estados mezclados a propósito (TODO, IN_PROGRESS, DONE): la regla es solo el responsable.
+            Task en10 = tareaCon(1L, TaskStatus.TODO, null, HOY.plusDays(10));
+            Task conResponsable = tareaCon(2L, TaskStatus.TODO, 5L, HOY.plusDays(1));
+            Task sinFecha = tareaCon(3L, TaskStatus.IN_PROGRESS, null, null);
+            Task en2 = tareaCon(4L, TaskStatus.DONE, null, HOY.plusDays(2));
+            when(repository.findAll()).thenReturn(List.of(en10, conResponsable, sinFecha, en2));
 
             List<Long> ids = service.sinResponsable().stream().map(Task::getId).toList();
 
-            assertEquals(List.of(13L, 10L, 12L), ids);
+            // El repositorio las entrega como 1, 3, 4: sin el .sorted(TaskOrders.POR_FECHA) este assert falla.
+            assertEquals(List.of(4L, 1L, 3L), ids);
         }
 
         @Test
-        void sinResponsable_siSoloConResponsable_devuelveVacio() {
-            Task conAssignee = tarea(20L, "Con responsable", 1L);
-            when(repository.findAll()).thenReturn(List.of(conAssignee));
+        void sinResponsable_todasConResponsable_devuelveListaVacia() {
+            when(repository.findAll()).thenReturn(List.of(tareaCon(1L, TaskStatus.TODO, 5L, null)));
 
             assertEquals(List.of(), service.sinResponsable());
         }
