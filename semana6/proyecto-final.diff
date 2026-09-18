@@ -33,7 +33,7 @@ index 0000000..0e28ce4
 +}
 diff --git a/src/main/java/com/taskflow/dto/ProjectProgressResponse.java b/src/main/java/com/taskflow/dto/ProjectProgressResponse.java
 new file mode 100644
-index 0000000..20891a2
+index 0000000..5360952
 --- /dev/null
 +++ b/src/main/java/com/taskflow/dto/ProjectProgressResponse.java
 @@ -0,0 +1,12 @@
@@ -45,12 +45,12 @@ index 0000000..20891a2
 + * projectName: nombre
 + * totalTasks: total de tareas
 + * doneTasks: tareas en DONE
-+ * percentDone: porcentaje completado, redondeado a 1 decimales
++ * percentDone: porcentaje completado, redondeado a 1 decimal
 + */
 +public record ProjectProgressResponse(Long projectId, String projectName, long totalTasks, long doneTasks, double percentDone) {
 +}
 diff --git a/src/main/java/com/taskflow/mapper/ProjectMapper.java b/src/main/java/com/taskflow/mapper/ProjectMapper.java
-index 3bc882c..93de11d 100644
+index 3bc882c..a7cc3fd 100644
 --- a/src/main/java/com/taskflow/mapper/ProjectMapper.java
 +++ b/src/main/java/com/taskflow/mapper/ProjectMapper.java
 @@ -28,4 +28,13 @@ public final class ProjectMapper {
@@ -59,7 +59,7 @@ index 3bc882c..93de11d 100644
      }
 +
 +    /**
-+     * Construye el DTO de progreso para un proyecto dado los conteos ya calculados por el service.
++     * Construye el DTO de progreso para un proyecto dados los conteos ya calculados por el service.
 +     */
 +    public static com.taskflow.dto.ProjectProgressResponse aProgreso(Project proyecto, long totalTasks,
 +                                                                      long doneTasks, double percentDone) {
@@ -159,10 +159,10 @@ index 0000000..df93625
 +}
 diff --git a/src/test/java/com/taskflow/unit/ProgresoProyectosServiceTest.java b/src/test/java/com/taskflow/unit/ProgresoProyectosServiceTest.java
 new file mode 100644
-index 0000000..b295d64
+index 0000000..a90baac
 --- /dev/null
 +++ b/src/test/java/com/taskflow/unit/ProgresoProyectosServiceTest.java
-@@ -0,0 +1,73 @@
+@@ -0,0 +1,80 @@
 +package com.taskflow.unit;
 +
 +import com.taskflow.model.Priority;
@@ -230,6 +230,13 @@ index 0000000..b295d64
 +        assertEquals(1L, salida.get(0).projectId());
 +        assertEquals(2L, salida.get(1).projectId());
 +        assertEquals(3L, salida.get(2).projectId());
++
++        assertEquals(5L, salida.get(0).totalTasks());
++        assertEquals(1L, salida.get(0).doneTasks());
++        assertEquals(3L, salida.get(1).totalTasks());
++        assertEquals(1L, salida.get(1).doneTasks());
++        assertEquals(0L, salida.get(2).totalTasks());
++        assertEquals(0L, salida.get(2).doneTasks());
 +
 +        assertEquals(20.0, salida.get(0).percentDone());
 +        assertEquals(33.3, salida.get(1).percentDone());

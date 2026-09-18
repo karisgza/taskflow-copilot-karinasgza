@@ -30,7 +30,7 @@ public final class ProjectMapper {
     }
 
     /**
-     * Construye el DTO de progreso para un proyecto dado los conteos ya calculados por el service.
+     * Construye el DTO de progreso para un proyecto dados los conteos ya calculados por el service.
      */
     public static com.taskflow.dto.ProjectProgressResponse aProgreso(Project proyecto, long totalTasks,
                                                                       long doneTasks, double percentDone) {

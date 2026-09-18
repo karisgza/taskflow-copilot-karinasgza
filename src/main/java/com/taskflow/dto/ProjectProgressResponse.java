@@ -6,7 +6,7 @@ package com.taskflow.dto;
  * projectName: nombre
  * totalTasks: total de tareas
  * doneTasks: tareas en DONE
- * percentDone: porcentaje completado, redondeado a 1 decimales
+ * percentDone: porcentaje completado, redondeado a 1 decimal
  */
 public record ProjectProgressResponse(Long projectId, String projectName, long totalTasks, long doneTasks, double percentDone) {
 }

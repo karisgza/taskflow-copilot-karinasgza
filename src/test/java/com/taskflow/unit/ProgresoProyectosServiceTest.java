@@ -66,6 +66,13 @@ class ProgresoProyectosServiceTest {
         assertEquals(2L, salida.get(1).projectId());
         assertEquals(3L, salida.get(2).projectId());
 
+        assertEquals(5L, salida.get(0).totalTasks());
+        assertEquals(1L, salida.get(0).doneTasks());
+        assertEquals(3L, salida.get(1).totalTasks());
+        assertEquals(1L, salida.get(1).doneTasks());
+        assertEquals(0L, salida.get(2).totalTasks());
+        assertEquals(0L, salida.get(2).doneTasks());
+
         assertEquals(20.0, salida.get(0).percentDone());
         assertEquals(33.3, salida.get(1).percentDone());
         assertEquals(0.0, salida.get(2).percentDone());
