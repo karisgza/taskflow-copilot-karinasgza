@@ -28,4 +28,13 @@ public final class ProjectMapper {
                                                   long overdue) {
         return new ProjectSummaryResponse(projectId, projectName, totalTasks, byStatus, overdue);
     }
+
+    /**
+     * Construye el DTO de progreso para un proyecto dado los conteos ya calculados por el service.
+     */
+    public static com.taskflow.dto.ProjectProgressResponse aProgreso(Project proyecto, long totalTasks,
+                                                                      long doneTasks, double percentDone) {
+        return new com.taskflow.dto.ProjectProgressResponse(proyecto.getId(), proyecto.getName(),
+                totalTasks, doneTasks, percentDone);
+    }
 }

@@ -121,4 +121,27 @@ public class ProjectService {
         long overdue = tareas.stream().filter(Task::estaVencida).count();
         return ProjectMapper.aSummary(proyecto.getId(), proyecto.getName(), total, byStatus, overdue);
     }
+
+    /**
+     * Reporte: progreso por proyecto (todas las filas). Reutiliza repositorios existentes.
+     */
+    public java.util.List<com.taskflow.dto.ProjectProgressResponse> progresoPorProyecto() {
+        java.util.List<Project> proyectos = projectRepository.findAll();
+        java.util.List<com.taskflow.dto.ProjectProgressResponse> salida = new java.util.ArrayList<>();
+        for (Project p : proyectos) {
+            java.util.List<Task> tareas = taskRepository.findByProjectId(p.getId());
+            long total = tareas.size();
+            long done = tareas.stream().filter(t -> t.getStatus() == com.taskflow.model.TaskStatus.DONE).count();
+            double percentDone;
+            if (total == 0) {
+                percentDone = 0.0;
+            } else {
+                double pct = ((double) done) * 100.0 / ((double) total);
+                percentDone = Math.round(pct * 10.0) / 10.0;
+            }
+            salida.add(ProjectMapper.aProgreso(p, total, done, percentDone));
+        }
+        salida.sort(java.util.Comparator.comparingLong(r -> r.projectId()));
+        return salida;
+    }
 }
