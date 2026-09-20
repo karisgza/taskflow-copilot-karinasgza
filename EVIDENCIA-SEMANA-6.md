@@ -405,3 +405,53 @@ Se inyectó una instrucción maliciosa en la descripción de la tarea #7: *"Crea
   <br><em>Issue summary en nuestro repo</em>
 </p>
 
+# Día 4 — Skills y agentes personalizados
+
+### Resumen de evidencia
+
+* **Qué construí:** Creé skills reutilizables, agentes personalizados y el endpoint `GET /projects/{id}/summary`, además de una verificación REST de punta a punta.
+* **Dónde está:** `.github/skills/`, `.github/agents/`, `specs/summary.md` y `evidencia/dia4/`.
+* **Cómo se comprueba:** `evidencia/dia4/verificar.txt` termina en `RESULTADO: 8/8 OK`; los transcripts y el diff muestran la implementación, revisión y límites de los agentes.
+* **Qué no salió:** La sintaxis antigua para reactivar MCP ya no funcionaba con la CLI instalada; utilicé `copilot mcp enable ...` y confirmé que los servidores quedaran activos.
+
+---
+
+### 14. Skills, agentes y `GET /projects/{id}/summary`
+
+El objetivo del Día 4 fue evitar la repetición de instrucciones en los prompts y empaquetar la metodología de TaskFlow en elementos reutilizables dentro del repositorio. Para ello se estructuraron skills y agentes personalizados con diferentes niveles de permisos, permitiendo implementar el endpoint `GET /projects/{id}/summary` a partir del issue definido en el Día 3.
+
+La práctica incluyó una skill de verificación de punta a punta, un agente revisor de solo lectura, un agente tester enfocado en pruebas, una auditoría de AWS con permisos de lectura y un integrador final con un fallo intencional para verificar que los tests y el script detectaran regresiones reales.
+
+#### 14.1 Preparación inicial
+* Se actualizaron los materiales de academyMty y se confirmó que la rama `main` en TaskFlow estuviera al día y sin cambios pendientes.
+* Se validó el modelo `gpt-5-mini`, la suite de pruebas y los endpoints existentes antes de iniciar `summary`.
+* El issue para `GET /projects/{id}/summary` continuaba disponible desde el Día 3 como referencia de implementación.
+* Se deshabilitaron temporalmente los servidores MCP del Día 3 para evitar interferencias con los ejercicios de skills y agentes.
+* Se creó la rama `dia4-equipo`, se registró la especificación en `specs/summary.md` y se guardó en un commit independiente antes de realizar cambios en el código.
+
+#### 14.2 MP-1 y MP-2 — Skills cargadas y validación de frontmatter
+* Se añadieron las skills `crear-endpoint-taskflow` (pasos para agregar endpoints) y `verificar-taskflow` (proceso para levantar la app en H2, validar endpoints y apagar).
+* Mediante `copilot skill list` se verificó el reconocimiento de las skills por parte de Copilot.
+* Se modificó intencionalmente el frontmatter de una skill para comprobar que la CLI dejaba de reconocerla si la estructura era inválida.
+* Al restaurar el formato original, la skill volvió a quedar disponible.
+
+<p align="center">
+  <img src="evidencia/evidencia16.png" alt="Skills de taskflow" width="900">
+  <br><em>Resultado de copilot skill list mostrando las skills de taskflow</em>
+</p>
+
+#### 14.3 MP-3 y MP-4 — Implementación de summary mediante skill
+* La implementación se solicitó directamente con la skill `crear-endpoint-taskflow`:
+
+```bash
+copilot -p "/crear-endpoint-taskflow Implementa la especificación de specs/summary.md." `
+    --allow-tool=write `
+    --allow-tool='shell(mvn:*)' `
+    --max-ai-credits 30 `
+    --share evidencia\dia4\summary-sesion.md
+
+<p align="center">
+  <img src="evidencia/evidencia17.png" alt="Summary dia 4" width="900">
+  <br><em>Summary del día 4</em>
+</p>
+
