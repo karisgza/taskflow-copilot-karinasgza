@@ -24,9 +24,11 @@
 | Rama y spec | `git switch -c feature/progress` y copié la spec a `specs/` | `git log --oneline main..feature/progress` (antes del merge) | El archivo progress.md dentro de /specs
 | Implementación | `copilot -p "/crear-endpoint-taskflow …"` con `gpt-5-mini` | `semana6/sesion-implementacion.md` (tiene la línea `Skill "crear-endpoint-taskflow" loaded successfully`) |
 | Revisión | agente `revisor` sobre `semana6/proyecto-final.diff` | `semana6/revision.md` (termina con `Veredicto:`) |
-| Tests | `mvn test` en verde | `<pega el total de la línea Tests run del PF-7>` |
+| Tests | `mvn test` en verde | `
+[INFO] Tests run: 80, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS` |
 | Comprobación REST | `verificar.ps1` con `casos-<feature>.ps1` | sección 5 de este documento |
-| Code review | Copilot en el PR | la pestaña *Files changed* del PR |
+| Code review | Copilot en el PR | https://github.com/karisgza/taskflow-copilot-karinasgza/pull/5/changes |
 
 ## 4. Qué hizo el agente y qué corregí yo
 
@@ -35,7 +37,7 @@
 |---|---|---|---|
 | 1 | `El agente pidió crear tests adicionales para progress, quería tests para los totales por separado además de los de porcentaje` | `yo` | `no se aceptó esa sugerencia en el PR` |
 | 2 | `El agente tuvo algunos errores al generar el documento ARQUITECTURA.md` | `verificador` | `se le pidió al gente revisar el resultado del verificador` |
-| 1 | `El agente pidió crear tests adicionales para progress, quería tests para los totales por separado además de los de porcentaje` | `yo` | `no se aceptó esa sugerencia en el PR` |
+
 
 **Lo que el agente hizo bien a la primera** (una o dos líneas): 
 -Implementar el spec de overdue
