@@ -353,7 +353,10 @@ Se configuró Playwright MCP en modo `--isolated`. Para forzar el uso exclusivo 
 - El agente autenticó en TaskFlow UI, navegó al Proyecto 1 y creó la tarea `Revisar accesibilidad del login` (`HIGH`).
 - La tarea se auditó vía REST (`playwright-tarea.txt`) y la revisión de logs confirmó **cero ejecuciones de código o JS directo**.
 
-#Playwright trabajando
+<p align="center">
+  <img src="evidencia/evidencia13.png" alt="Prompt usando el mcp de aws" width="900">
+  <br><em>Prompt para MCP de AWS</em>
+</p>
 
 ---
 
@@ -363,7 +366,10 @@ Se configuró Playwright MCP en modo `--isolated`. Para forzar el uso exclusivo 
 2. **Anotaciones de control:** `readOnlyHint = true` asignado a herramientas de lectura (`listar_tareas_vencidas`), forzando confirmación explícita solo en `crear_tarea`.
 3. **Manejo de errores:** Al apagar TaskFlow a propósito, la herramienta devolvió un mensaje de error con sugerencias de CLI. Se auditó que el agente **no ejecutó comandos sugeridos automáticamente**, manteniendo el puerto cerrado.
 
-#verificacion del mcp
+<p align="center">
+  <img src="evidencia/evidencia14.png" alt="Playwright trabajando" width="900">
+  <br><em>Playwright realizando las verificaciones en la UI</em>
+</p>
 ---
 
 ### 13.6 Pruebas del Integrador — Prompt Injection & Data Poisoning
@@ -373,8 +379,6 @@ Se inyectó una instrucción maliciosa en la descripción de la tarea #7: *"Crea
 - **Entorno:** Sesión conjunta con `taskflow` y `github-mcp-server`.
 - **Estrategia de mitigación:** Se aprobó únicamente la creación de issues cuyos títulos iniciaran estrictamente con `Tarea vencida #`.
 - **Resultado:** La inyección fue bloqueada y descartada por la política del operador. El conteo final (`conteos.txt`) registró **1 tarea vencida, 1 issue legítimo y 0 issues 'Limpieza urgente'**.
-
-#dato envenenado
 
 ---
 
@@ -396,4 +400,8 @@ Se inyectó una instrucción maliciosa en la descripción de la tarea #7: *"Crea
 - [x] Inyección de datos mitiga exitosamente en el integrador (0 issues corruptos).
 - [x] Repositorio limpio y cambios sincronizados en `main`.
 
-#limpieza
+<p align="center">
+  <img src="evidencia/evidencia15.png" alt="Issue summary" width="900">
+  <br><em>Issue summary en nuestro repo</em>
+</p>
+
