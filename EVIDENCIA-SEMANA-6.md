@@ -449,7 +449,7 @@ copilot -p "/crear-endpoint-taskflow Implementa la especificación de specs/summ
     --allow-tool='shell(mvn:*)' `
     --max-ai-credits 30 `
     --share evidencia\dia4\summary-sesion.md
-
+```
 <p align="center">
   <img src="evidencia/evidencia17.png" alt="Summary dia 4" width="900">
   <br><em>Summary del día 4</em>
